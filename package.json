@@ -1,0 +1,20 @@
+{
+  "name": "back-todoapp",
+  "version": "0.1.0",
+  "description": "to do app practice",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todo",
+    "practice"
+  ],
+  "author": "Angel Pulido",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  }
+}
