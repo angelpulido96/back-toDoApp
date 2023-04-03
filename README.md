@@ -1,2 +1,4 @@
-# back-toDoApp
-nodeJs, express, mongoose
+Need to create .env with:
+
+MONGOURL=""
+MONGOPASSWORD=""
