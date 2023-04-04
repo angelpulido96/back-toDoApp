@@ -37,7 +37,6 @@ const UserSchema = new Schema({
       },
       message: props => `${props.value} is an invalid number.`
     }
-
   },
   email: {
     type: String,

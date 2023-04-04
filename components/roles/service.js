@@ -1,6 +1,6 @@
-const User = require('./model')
+const Role = require('./model')
 
-const getUsers = (data) => {
+const getRoles = (data) => {
   try {
 
   } catch (error) {
@@ -8,14 +8,11 @@ const getUsers = (data) => {
   }
 }
 
-const createUser = async (data) => {
+const createRole = async (data) => {
   let response = {
     created: false
   }
   try {
-
-    const createdUser = new User(data)
-    await createdUser.save()
 
     response.created = true
   } catch (error) {
@@ -25,6 +22,6 @@ const createUser = async (data) => {
 }
 
 module.exports = {
-  getUsers,
-  createUser
+  getRoles,
+  createRole
 }
