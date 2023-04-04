@@ -8,6 +8,21 @@ const getUsers = (data) => {
   }
 }
 
+const loginUser = async (data) => {
+  let response = {
+    user: null
+  }
+  try {
+
+    const request = await User.findOne({ email: data.email })
+
+    response.user = request
+  } catch (error) {
+    response.error = error
+  }
+  return response
+}
+
 const createUser = async (data) => {
   let response = {
     created: false
@@ -26,5 +41,6 @@ const createUser = async (data) => {
 
 module.exports = {
   getUsers,
+  loginUser,
   createUser
 }

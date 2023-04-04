@@ -14,6 +14,9 @@ const createRole = async (data) => {
   }
   try {
 
+    const request = new Role(data)
+    await request.save()
+
     response.created = true
   } catch (error) {
     response.error = error

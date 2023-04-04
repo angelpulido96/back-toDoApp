@@ -4,10 +4,36 @@ const response = require('../../network/responses')
 const mongoose = require('mongoose')
 const CryptoJS = require("crypto-js")
 require('dotenv').config()
-const { createUser } = require('./service')
+const { createUser, loginUser } = require('./service')
+const { checkPassword } = require('../../network/encrypt')
 
 router.get('/', (req, res) => {
+  try {
 
+  } catch (error) {
+
+  }
+})
+
+router.post('/login', async (req, res) => {
+  const data = req.body
+  let errorMessage = 'Unexpected error has occurred'
+  try {
+
+    const request = await loginUser(data)
+    if (request.error) {
+      throw request.error
+    }
+    const check = checkPassword(data.password, request.user.password)
+    if (!check) {
+      errorMessage = 'Incorrect password'
+      throw new Error('Incorrect password')
+    }
+
+    response.success(req, res, 'Loged user', 200, request)
+  } catch (error) {
+    response.error(req, res, errorMessage, 500, error.message)
+  }
 })
 
 router.post('/', async (req, res) => {

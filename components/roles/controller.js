@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const response = require('../../network/responses')
 const { createRole } = require('./service')
+const mongoose = require('mongoose')
 
 router.get('/', (req, res) => {
   try {
@@ -23,6 +24,10 @@ router.post('/', async (req, res) => {
 
     response.success(req, res, 'Role created', 201, request)
   } catch (error) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      const errorValues = Object.values(error.errors)
+      errorMessage = errorValues.length > 0 ? errorValues[0].message : 'Validation error'
+    }
     response.error(req, res, errorMessage, 500, error.message)
   }
 })
