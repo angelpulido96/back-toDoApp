@@ -1,3 +1,4 @@
+const { checkPassword } = require('../../network/encrypt')
 const User = require('./model')
 
 const getUsers = (data) => {
@@ -14,7 +15,15 @@ const loginUser = async (data) => {
   }
   try {
 
-    const request = await User.findOne({ email: data.email })
+    const request = await User.findOne({ email: data.email }, { confirmPassword: 0 })
+
+    const check = checkPassword(data.password, request.password)
+    if (!check) {
+      errorMessage = 'Incorrect password'
+      throw new Error('Incorrect password')
+    }
+
+    request.password = undefined
 
     response.user = request
   } catch (error) {

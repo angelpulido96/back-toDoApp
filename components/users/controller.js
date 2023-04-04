@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const CryptoJS = require("crypto-js")
 require('dotenv').config()
 const { createUser, loginUser } = require('./service')
-const { checkPassword } = require('../../network/encrypt')
 
 router.get('/', (req, res) => {
   try {
@@ -24,14 +23,12 @@ router.post('/login', async (req, res) => {
     if (request.error) {
       throw request.error
     }
-    const check = checkPassword(data.password, request.user.password)
-    if (!check) {
-      errorMessage = 'Incorrect password'
-      throw new Error('Incorrect password')
-    }
 
     response.success(req, res, 'Loged user', 200, request)
   } catch (error) {
+    if (error.message === 'Incorrect password') {
+      errorMessage = error.message
+    }
     response.error(req, res, errorMessage, 500, error.message)
   }
 })
