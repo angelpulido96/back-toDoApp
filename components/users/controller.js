@@ -4,13 +4,20 @@ const response = require('../../network/responses')
 const mongoose = require('mongoose')
 const CryptoJS = require("crypto-js")
 require('dotenv').config()
-const { createUser, loginUser } = require('./service')
+const { createUser, loginUser, getUsers, deleteUser, updateUser } = require('./service')
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  let errorMessage = 'Unexpected error has occurred'
   try {
 
-  } catch (error) {
+    const request = await getUsers()
+    if (request.error) {
+      throw request.error
+    }
 
+    response.success(req, res, 'Users list', 200, request)
+  } catch (error) {
+    response.error(req, res, errorMessage, 500, error.message)
   }
 })
 
@@ -54,6 +61,37 @@ router.post('/', async (req, res) => {
     } else if (error.code === 11000) {
       errorMessage = 'The email is already in use'
     }
+    response.error(req, res, errorMessage, 500, error.message)
+  }
+})
+
+router.patch('/delete/:id', async (req, res) => {
+  const { id } = req.params
+  let errorMessage = 'Unexpected error has occurred'
+  try {
+
+    const request = await deleteUser(id)
+    if (request.error) {
+      throw request.error
+    }
+
+    response.success(req, res, 'Deleted user', 201, request)
+  } catch (error) {
+    response.error(req, res, errorMessage, 500, error.message)
+  }
+})
+
+router.patch('/', async (req, res) => {
+  const data = req.body
+  let errorMessage = 'Unexpected error has occurred'
+  try {
+    const request = await updateUser(data)
+    if (request.error) {
+      throw request.error
+    }
+
+    response.success(req, res, 'Updated user', 201, request)
+  } catch (error) {
     response.error(req, res, errorMessage, 500, error.message)
   }
 })

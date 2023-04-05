@@ -1,12 +1,18 @@
 const { checkPassword } = require('../../network/encrypt')
 const User = require('./model')
 
-const getUsers = (data) => {
-  try {
-
-  } catch (error) {
-
+const getUsers = async (data) => {
+  let response = {
+    users: []
   }
+  try {
+    const request = await User.find({ status: 1 })
+
+    response.users = request
+  } catch (error) {
+    response.error = error
+  }
+  return response
 }
 
 const loginUser = async (data) => {
@@ -48,8 +54,55 @@ const createUser = async (data) => {
   return response
 }
 
+const deleteUser = async (id) => {
+  let response = {
+    deleted: false
+  }
+  try {
+
+    const request = await User.updateOne({ _id: id }, { $set: { status: 0 } })
+
+    if (request.acknowledged) {
+      response.deleted = true
+    }
+  } catch (error) {
+    response.error = error
+  }
+  return response
+}
+
+const updateUser = async (data) => {
+  let response = {
+    updateted: false
+  }
+  try {
+
+    const request = await User.updateOne({ _id: data.id },
+      {
+        $set: {
+          name: data.name,
+          firstLastName: data.firstLastName,
+          secondLastName: data.secondLastName,
+          cellphone: data.cellphone,
+          email: data.email,
+          avatar: data.avatar
+        }
+      })
+    if (!request.modifiedCount) {
+      throw new Error('Database error')
+    }
+
+    response.updateted = true
+  } catch (error) {
+    response.error = error
+  }
+  return response
+}
+
 module.exports = {
   getUsers,
   loginUser,
-  createUser
+  createUser,
+  deleteUser,
+  updateUser
 }
