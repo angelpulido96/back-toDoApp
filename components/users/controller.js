@@ -1,9 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const router = express.Router()
-const response = require('../../network/responses')
 const mongoose = require('mongoose')
 const CryptoJS = require("crypto-js")
-require('dotenv').config()
+const response = require('../../network/responses')
 const { createUser, loginUser, getUsers, deleteUser, updateUser } = require('./service')
 
 router.get('/', async (req, res) => {

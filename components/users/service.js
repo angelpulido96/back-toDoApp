@@ -1,5 +1,5 @@
-const { checkPassword } = require('../../network/encrypt')
 const User = require('./model')
+const { checkPassword } = require('../../network/encrypt')
 
 const getUsers = async (data) => {
   let response = {
