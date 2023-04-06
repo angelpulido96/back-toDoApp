@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     }
   },
   cellphone: {
-    type: Number,
+    type: String,
     required: true,
     validate: {
       validator: function (v) {

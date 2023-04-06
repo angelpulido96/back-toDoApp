@@ -14,10 +14,10 @@ const TaskSchema = new Schema({
         type: Date,
         required: true
     },
-    created: {
+    createdBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'Created user is required']
+        required: [true, 'CreatedBy is required']
     },
     status: {
         type: Number,
