@@ -22,6 +22,10 @@ const loginUser = async (data) => {
   try {
 
     const request = await User.findOne({ email: data.email }, { confirmPassword: 0 })
+    if (!request) {
+      errorMessage = 'Incorrect user'
+      throw new Error('Incorrect user')
+    }
 
     const check = checkPassword(data.password, request.password)
     if (!check) {

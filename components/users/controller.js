@@ -36,6 +36,10 @@ router.post('/login', async (req, res) => {
     if (error.message === 'Incorrect password') {
       errorMessage = error.message
     }
+    if (error.message === 'Incorrect user') {
+      errorMessage = error.message
+    }
+
     response.error(req, res, errorMessage, 500, error.message)
   }
 })

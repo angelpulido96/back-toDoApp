@@ -1,10 +1,12 @@
 const express = require('express')
 const chalk = require('chalk')
 const app = express()
+const cors = require('cors');
 const routes = require('./network/routes')
 const connectionDB = require('./db')
 
 app.use(express.json())
+app.use(cors());
 app.use(express.urlencoded({ extended: false }))
 
 routes(app)
