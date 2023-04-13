@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: false }))
 
 routes(app)
 
-app.listen(3000, (error) => {
+app.listen(3002, (error) => {
     if (error) console.log(chalk.red('[Connection error]'))
     console.log(chalk.blue('The app is on http://localhost:3000'))
     connectionDB()
