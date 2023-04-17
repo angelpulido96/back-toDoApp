@@ -34,10 +34,10 @@ router.post('/login', async (req, res) => {
     response.success(req, res, 'Loged user', 200, request)
   } catch (error) {
     if (error.message === 'Incorrect password') {
-      errorMessage = error.message
+      errorMessage = 'Incorrect email or password'
     }
     if (error.message === 'Incorrect user') {
-      errorMessage = error.message
+      errorMessage = 'Incorrect email or password'
     }
 
     response.error(req, res, errorMessage, 500, error.message)

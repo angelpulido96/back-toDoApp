@@ -4,14 +4,14 @@ const CryptoJS = require("crypto-js")
 exports.checkPassword = (toEncrypt, encrypted) => {
     let response = false
 
-    const pass = CryptoJS.AES.encrypt(toEncrypt, process.env.CRYPTOTOKEN).toString()
-    const descPass = CryptoJS.AES.decrypt(pass, process.env.CRYPTOTOKEN).toString()
-    const passDesc = JSON.parse(descPass.toString(CryptoJS.enc.Utf8))
+    const comingPass = CryptoJS.AES.encrypt(toEncrypt, process.env.CRYPTOTOKEN).toString()
+    const descComingPass = CryptoJS.AES.decrypt(comingPass, process.env.CRYPTOTOKEN).toString()
+    const comingPassToString = JSON.parse(descComingPass.toString(CryptoJS.enc.Utf8))
 
-    const desc = CryptoJS.AES.decrypt(encrypted, process.env.CRYPTOTOKEN).toString()
-    const originalPassword = JSON.parse(desc.toString(CryptoJS.enc.Utf8))
+    const requestPass = CryptoJS.AES.decrypt(encrypted, process.env.CRYPTOTOKEN).toString()
+    const requestPassToString = JSON.parse(requestPass.toString(CryptoJS.enc.Utf8))
 
-    if (passDesc === originalPassword) {
+    if (comingPassToString === requestPassToString) {
         response = true
     }
     return response

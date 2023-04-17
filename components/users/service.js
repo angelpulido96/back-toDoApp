@@ -1,5 +1,7 @@
 const User = require('./model')
 const { checkPassword } = require('../../network/encrypt')
+require('dotenv').config()
+const CryptoJS = require("crypto-js")
 
 const getUsers = async (data) => {
   let response = {
@@ -22,14 +24,13 @@ const loginUser = async (data) => {
   try {
 
     const request = await User.findOne({ email: data.email }, { confirmPassword: 0 })
+
     if (!request) {
-      errorMessage = 'Incorrect user'
       throw new Error('Incorrect user')
     }
 
     const check = checkPassword(data.password, request.password)
     if (!check) {
-      errorMessage = 'Incorrect password'
       throw new Error('Incorrect password')
     }
 
