@@ -49,6 +49,14 @@ router.post('/', async (req, res) => {
   let errorMessage = 'Unexpected error has occurred'
   try {
 
+    if (data.password !== data.confirmPassword) {
+      errorMessage = 'Password and Confirm Password are different.'
+      throw new Error('Password and Confirm Password are different.')
+    } else if (!data.password) {
+      errorMessage = 'Password is required'
+      throw new Error('Password is required')
+    }
+
     data.password = CryptoJS.AES.encrypt(data.password, process.env.CRYPTOTOKEN).toString()
     data.confirmPassword = CryptoJS.AES.encrypt(data.confirmPassword, process.env.CRYPTOTOKEN).toString()
 
