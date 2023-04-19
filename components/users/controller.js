@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const CryptoJS = require("crypto-js")
 const response = require('../../network/responses')
 const { createUser, loginUser, getUsers, deleteUser, updateUser } = require('./service')
+const { default: Axios } = require('axios')
 
 router.get('/', async (req, res) => {
   let errorMessage = 'Unexpected error has occurred'
@@ -47,6 +48,17 @@ router.post('/login', async (req, res) => {
 router.post('/', async (req, res) => {
   const data = req.body
   let errorMessage = 'Unexpected error has occurred'
+
+  let base64Code = data.avatar.url.split(',')[1]
+
+  const requestImage = await Axios({
+    method: 'POST',
+    url: 'https://api.imgur.com/3/image',
+    headers: { Authorization: `Client-ID ${process.env.IMGURCLIENTID}` },
+    data: base64Code
+  })
+  data.avatar.url = requestImage.data.data.link
+
   try {
 
     if (data.password !== data.confirmPassword) {

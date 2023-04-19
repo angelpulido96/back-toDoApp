@@ -54,7 +54,31 @@ const UserSchema = new Schema({
     required: [true, 'ConfirmPassword is required']
   },
   avatar: {
-    type: String
+    type: Object,
+    properties: {
+      fileName: {
+        type: String,
+        required: [true, 'Filename is required']
+      },
+      type: {
+        type: String,
+        required: [true, 'Type is required']
+      },
+      size: {
+        type: Number,
+        required: [true, 'Size is required']
+      },
+      width: {
+        type: String
+      },
+      height: {
+        type: String
+      },
+      url: {
+        type: String,
+        required: [true, 'Url is required']
+      }
+    }
   },
   status: {
     type: Number,
