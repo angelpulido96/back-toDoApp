@@ -49,15 +49,17 @@ router.post('/', async (req, res) => {
   const data = req.body
   let errorMessage = 'Unexpected error has occurred'
 
-  let base64Code = data.avatar.url.split(',')[1]
+  if (data.avatar.url) {
+    let base64Code = data.avatar.url.split(',')[1]
 
-  const requestImage = await Axios({
-    method: 'POST',
-    url: 'https://api.imgur.com/3/image',
-    headers: { Authorization: `Client-ID ${process.env.IMGURCLIENTID}` },
-    data: base64Code
-  })
-  data.avatar.url = requestImage.data.data.link
+    const requestImage = await Axios({
+      method: 'POST',
+      url: 'https://api.imgur.com/3/image',
+      headers: { Authorization: `Client-ID ${process.env.IMGURCLIENTID}` },
+      data: base64Code
+    })
+    data.avatar.url = requestImage.data.data.link
+  }
 
   try {
 
