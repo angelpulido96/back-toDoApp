@@ -12,7 +12,7 @@ const TaskSchema = new Schema({
     },
     limitDate: {
         type: Date,
-        required: true
+        required: [true, 'Limit date is required']
     },
     createdBy: {
         type: Schema.Types.ObjectId,
