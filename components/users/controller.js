@@ -6,6 +6,7 @@ const CryptoJS = require("crypto-js")
 const response = require('../../network/responses')
 const { createUser, loginUser, getUsers, deleteUser, updateUser } = require('./service')
 const { default: Axios } = require('axios')
+const jwt = require('jsonwebtoken');
 
 router.get('/', async (req, res) => {
   let errorMessage = 'Unexpected error has occurred'
@@ -27,12 +28,20 @@ router.post('/login', async (req, res) => {
   let errorMessage = 'Unexpected error has occurred'
   try {
 
-    const request = await loginUser(data)
+    let request = await loginUser(data)
+    const userId = request.user._id.toString()
+    const token = jwt.sign({ userId }, process.env.JWT, { expiresIn: '1m' })
+    const refreshToken = jwt.sign({ userId }, process.env.JWT, { expiresIn: '6m' })
+    const user = {
+      ...request.user.toObject(),
+      token,
+      refreshToken
+    }
     if (request.error) {
       throw request.error
     }
 
-    response.success(req, res, 'Loged user', 200, request)
+    response.success(req, res, 'Loged user', 200, request = { user })
   } catch (error) {
     if (error.message === 'Incorrect password') {
       errorMessage = 'Incorrect email or password'

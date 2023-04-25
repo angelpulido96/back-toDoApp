@@ -84,7 +84,7 @@ const UserSchema = new Schema({
     type: Number,
     default: 1
   }
-}, { timestamps: true, versionKey: false })
+}, { timestamps: true, versionKey: false, strict: false })
 
 const User = mongoose.models.UserSchema || mongoose.model('User', UserSchema, 'users') //  la primera linea (mongoose.models.UserSchema) verifica que el modelo existe y no sea redefinido, en caso que no exista se crea el modelo
 

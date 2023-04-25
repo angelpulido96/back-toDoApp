@@ -3,10 +3,11 @@ const express = require('express')
 const moment = require('moment')
 const router = express.Router()
 const mongoose = require('mongoose')
+const validateToken = require('../../middelware/validateToken')
 const response = require('../../network/responses')
 const { createTasks, getTasks, updateTask, deleteTask } = require('./service')
 
-router.get('/', async (req, res) => {
+router.get('/', validateToken, async (req, res) => {
   const filters = req.query
   let errorMessage = 'Unexpected error has occurred'
   try {
