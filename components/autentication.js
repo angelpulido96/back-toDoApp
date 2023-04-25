@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
     }
 
     // crear un nuevo token de acceso y enviarlo al cliente
-    const accessToken = jwt.sign({ userId: token }, process.env.JWT, { expiresIn: '30s' })
+    const accessToken = jwt.sign({ userId: decoded.userId }, process.env.JWT, { expiresIn: '1h' })
     const request = { accessToken }
     response.success(req, res, 'Users list', 201, request)
   })
