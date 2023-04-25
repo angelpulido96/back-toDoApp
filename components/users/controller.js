@@ -30,8 +30,8 @@ router.post('/login', async (req, res) => {
 
     let request = await loginUser(data)
     const userId = request.user._id.toString()
-    const token = jwt.sign({ userId }, process.env.JWT, { expiresIn: '1m' })
-    const refreshToken = jwt.sign({ userId }, process.env.JWT, { expiresIn: '6m' })
+    const token = jwt.sign({ userId }, process.env.JWT, { expiresIn: '1h' })
+    const refreshToken = jwt.sign({ userId }, process.env.JWT, { expiresIn: '24h' })
     const user = {
       ...request.user.toObject(),
       token,
