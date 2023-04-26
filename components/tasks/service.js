@@ -27,6 +27,8 @@ const getTasks = async (filters) => {
             description: 1,
             limitDate: 1,
             status: 1,
+            createdAt: 1,
+            // createdBy: 1, This code will return an object inside an array, to return just one object you need to type below code
             createdBy: {
               $arrayElemAt: ["$createdBy", 0],
             },
