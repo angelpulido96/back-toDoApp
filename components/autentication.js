@@ -7,13 +7,13 @@ const response = require('../network/responses')
 router.post('/', (req, res) => {
   const { token, refreshToken } = req.body;
 
-  // verificar si el refresh token es válido
+  // Verify if refreshToken is valid
   jwt.verify(refreshToken, process.env.JWT, (err, decoded) => {
     if (err) {
       return response.error(req, res, 'Invalid user', 400)
     }
 
-    // crear un nuevo token de acceso y enviarlo al cliente
+    // Create new accessToken
     const accessToken = jwt.sign({ userId: decoded.userId }, process.env.JWT, { expiresIn: '1h' })
     const request = { accessToken }
     response.success(req, res, 'Users list', 201, request)

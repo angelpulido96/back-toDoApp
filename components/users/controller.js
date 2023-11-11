@@ -29,16 +29,16 @@ router.post('/login', async (req, res) => {
   try {
 
     let request = await loginUser(data)
+    if (request.error) {
+      throw request.error
+    }
     const userId = request.user._id.toString()
     const token = jwt.sign({ userId }, process.env.JWT, { expiresIn: '1h' })
-    const refreshToken = jwt.sign({ userId }, process.env.JWT, { expiresIn: '24h' })
+    const refreshToken = jwt.sign({ userId }, process.env.JWT, { expiresIn: '9h' })
     const user = {
       ...request.user.toObject(),
       token,
       refreshToken
-    }
-    if (request.error) {
-      throw request.error
     }
 
     response.success(req, res, 'Loged user', 200, request = { user })
